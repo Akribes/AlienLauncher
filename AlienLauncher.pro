@@ -7,11 +7,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     accountmanager.cpp \
+    instance.cpp \
+    instancemanager.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     accountmanager.h \
+    globals.h \
+    instance.h \
+    instancemanager.h \
     mainwindow.h
 
 FORMS += \

@@ -13,10 +13,15 @@
  * limitations under the License.
  */
 
+#include "globals.h"
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <QDir>
 #include <QUuid>
+#include <QTimer>
+
+const QDir baseDir (QDir::homePath() + "/.alienlauncher");
 
 int main(int argc, char *argv[])
 {
@@ -31,7 +36,10 @@ int main(int argc, char *argv[])
         s.setValue("auth/clientToken", QUuid::createUuid().toString(QUuid::Id128));
     }
 
+	if (!baseDir.exists()) baseDir.mkpath(".");
+
     MainWindow w;
+	QTimer::singleShot(0, &w, SLOT(onReady()));
     w.show();
     return a.exec();
 }

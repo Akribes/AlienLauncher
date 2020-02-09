@@ -27,14 +27,45 @@ MainWindow::MainWindow(QWidget *parent):
     connect(&accountManager, SIGNAL(loginSucceeded()), this, SLOT(clearCredentialInputs()));
     connect(&accountManager, SIGNAL(loginFailed(QString, QString)), this, SLOT(onLoginFailed(QString, QString)));
     connect(&accountManager, SIGNAL(loginSucceeded()), this, SLOT(onLoginSucceeded()));
-    connect(&accountManager, SIGNAL(loggedOut()), this, SLOT(onLogout()));
-
-    accountManager.refresh();
+	connect(&accountManager, SIGNAL(loggedOut()), this, SLOT(onLogout()));
 }
 
 MainWindow::~MainWindow() {
     delete ui;
 }
+
+void MainWindow::onReady() {
+	this->ui->statusBar->showMessage("Refreshing access token...");
+	accountManager.refresh();
+
+	this->ui->statusBar->showMessage("Refreshing verion manifest...");
+	instanceManager.downloadVersionManifest();
+	this->ui->statusBar->showMessage("Done :)", 1000);
+}
+
+void MainWindow::clearCredentialInputs() {
+	this->ui->usernameLineEdit->clear();
+	this->ui->passwordLineEdit->clear();
+}
+
+void MainWindow::onLoginFailed(QString error, QString detailed) {
+	this->ui->statusBar->clearMessage();
+	QMessageBox msgBox;
+	msgBox.setWindowTitle(":(");
+	msgBox.setText("Logging in failed.");
+	msgBox.setDetailedText(QString("%1:\n\n%2").arg(error).arg(detailed));
+	msgBox.exec();
+}
+
+void MainWindow::onLoginSucceeded() {
+	this->ui->statusBar->clearMessage();
+	accountStatusLabel.setText(QString("Logged in as %1").arg(accountManager.getPlayername()));
+}
+
+void MainWindow::onLogout() {
+	accountStatusLabel.setText("Not logged in");
+}
+
 
 // Instances
 void MainWindow::on_applyButton_clicked() {
@@ -58,29 +89,4 @@ void MainWindow::on_loginButton_clicked() {
 // About
 void MainWindow::on_aboutQtButton_clicked() {
     QMessageBox::aboutQt(this);
-}
-
-// Other things
-
-void MainWindow::clearCredentialInputs() {
-    this->ui->usernameLineEdit->clear();
-    this->ui->passwordLineEdit->clear();
-}
-
-void MainWindow::onLoginFailed(QString error, QString detailed) {
-    this->ui->statusBar->clearMessage();
-    QMessageBox msgBox;
-    msgBox.setWindowTitle(":(");
-    msgBox.setText("Logging in failed.");
-    msgBox.setDetailedText(QString("%1:\n\n%2").arg(error).arg(detailed));
-    msgBox.exec();
-}
-
-void MainWindow::onLoginSucceeded() {
-    this->ui->statusBar->clearMessage();
-    accountStatusLabel.setText(QString("Logged in as %1").arg(accountManager.getPlayername()));
-}
-
-void MainWindow::onLogout() {
-    accountStatusLabel.setText("Not logged in");
 }

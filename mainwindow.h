@@ -17,6 +17,7 @@
 #define MAINWINDOW_H
 
 #include "accountmanager.h"
+#include "instancemanager.h"
 #include <QLabel>
 #include <QMainWindow>
 #include <QSettings>
@@ -42,8 +43,11 @@ class MainWindow: public QMainWindow {
         QLabel accountStatusLabel;
 
         AccountManager accountManager;
+		InstanceManager instanceManager;
 
     private slots:
+		void onReady();
+
         void clearCredentialInputs();
         void onLoginFailed(QString error, QString detailed);
         void onLoginSucceeded();
@@ -59,4 +63,5 @@ class MainWindow: public QMainWindow {
         // About
         void on_aboutQtButton_clicked();
 };
+
 #endif // MAINWINDOW_H
