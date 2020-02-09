@@ -1,0 +1,9 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Version=1.1
+Name=AlienLauncher
+GenericName=Minecraft Launcher
+Exec=AlienLauncher
+Terminal=false
+Icon=alienlauncher
