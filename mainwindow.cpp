@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent):
 }
 
 MainWindow::~MainWindow() {
+	if (addInstanceWindow) addInstanceWindow->close();
     delete ui;
 }
 
@@ -40,7 +41,6 @@ void MainWindow::onReady() {
 
 	this->ui->statusBar->showMessage("Refreshing verion manifest...");
 	instanceManager.downloadVersionManifest();
-	this->ui->statusBar->showMessage("Done :)", 1000);
 }
 
 void MainWindow::clearCredentialInputs() {
@@ -66,14 +66,26 @@ void MainWindow::onLogout() {
 	accountStatusLabel.setText("Not logged in");
 }
 
+void MainWindow::addInstanceWindowClosed() {
+	addInstanceWindow = nullptr;
+}
 
 // Instances
-void MainWindow::on_applyButton_clicked() {
-    // TODO Save current instance
+void MainWindow::on_addButton_clicked() {
+	if (addInstanceWindow == nullptr) {
+		addInstanceWindow = new AddInstanceWindow();
+		addInstanceWindow->setAttribute(Qt::WA_DeleteOnClose);
+		connect(addInstanceWindow, SIGNAL(destroyed(QObject *)), this, SLOT(addInstanceWindowClosed()));
+		addInstanceWindow->show();
+	}
 }
 
 void MainWindow::on_launchButton_clicked() {
     // TODO Launch current instance
+}
+
+void MainWindow::on_instanceComboBox_currentTextChanged(const QString &text) {
+	// TODO Switch instance, display information
 }
 
 // Account

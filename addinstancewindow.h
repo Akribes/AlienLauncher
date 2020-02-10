@@ -13,30 +13,31 @@
  * limitations under the License.
  */
 
-#ifndef INSTANCEMANAGER_H
-#define INSTANCEMANAGER_H
+#ifndef ADDINSTANCEWINDOW_H
+#define ADDINSTANCEWINDOW_H
 
-#include "globals.h"
-#include "instance.h"
-#include <QObject>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
+#include <QComboBox>
+#include <QLineEdit>
+#include <QWidget>
 
-class InstanceManager : public QObject {
-    Q_OBJECT
+namespace Ui {
+	class AddInstanceWindow;
+}
+
+class AddInstanceWindow: public QWidget {
+	Q_OBJECT
+
 	public:
-		explicit InstanceManager(QObject *parent = nullptr);
-		~InstanceManager();
+		explicit AddInstanceWindow(QWidget *parent = nullptr);
+		~AddInstanceWindow();
 
-		void downloadVersionManifest(); // https://launchermeta.mojang.com/mc/game/version_manifest.json
+	private slots:
+		void on_typeComboBox_currentIndexChanged(int index = 0);
 
 	private:
-		QNetworkAccessManager *nam;
-		// QVector<Instance> instances;
-
-	public slots:
-		void replyReceived(QNetworkReply * reply);
+		Ui::AddInstanceWindow *ui;
+		QLineEdit *urlLineEdit = nullptr;
+		QComboBox *versionComboBox = nullptr;
 };
 
-#endif // INSTANCEMANAGER_H
+#endif // ADDINSTANCEWINDOW_H

@@ -38,8 +38,9 @@ int main(int argc, char *argv[])
 
 	if (!baseDir.exists()) baseDir.mkpath(".");
 
-    MainWindow w;
-	QTimer::singleShot(0, &w, SLOT(onReady()));
-    w.show();
+	MainWindow *w = new MainWindow; // Apparently I need a pointer so Qt doesn't complain at me
+	w->setAttribute(Qt::WA_DeleteOnClose);
+	QTimer::singleShot(0, w, SLOT(onReady()));
+	w->show();
     return a.exec();
 }

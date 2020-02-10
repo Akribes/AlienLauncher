@@ -48,6 +48,9 @@
        </item>
        <item row="0" column="1">
         <widget class="QLineEdit" name="nameLineEdit">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="inputMethodHints">
           <set>Qt::ImhNoAutoUppercase|Qt::ImhNoEditMenu</set>
          </property>
@@ -69,22 +72,34 @@
       </layout>
      </item>
      <item>
-      <widget class="QComboBox" name="instanceComboBox"/>
-     </item>
-     <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
        <item>
-        <widget class="QPushButton" name="applyButton">
+        <widget class="QComboBox" name="instanceComboBox"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="addButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
-          <string>Apply</string>
+          <string>Add</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="launchButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Launch</string>
          </property>

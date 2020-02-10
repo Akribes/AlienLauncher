@@ -18,6 +18,7 @@
 
 #include "accountmanager.h"
 #include "instancemanager.h"
+#include "addinstancewindow.h"
 #include <QLabel>
 #include <QMainWindow>
 #include <QSettings>
@@ -45,6 +46,8 @@ class MainWindow: public QMainWindow {
         AccountManager accountManager;
 		InstanceManager instanceManager;
 
+		AddInstanceWindow *addInstanceWindow = nullptr;
+
     private slots:
 		void onReady();
 
@@ -53,9 +56,12 @@ class MainWindow: public QMainWindow {
         void onLoginSucceeded();
         void onLogout();
 
+		void addInstanceWindowClosed();
+
         // Instances
-        void on_applyButton_clicked();
+		void on_addButton_clicked();
         void on_launchButton_clicked();
+		void on_instanceComboBox_currentTextChanged(const QString &text);
 
         // Account
         void on_loginButton_clicked();
